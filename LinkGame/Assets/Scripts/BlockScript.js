@@ -25,7 +25,7 @@ function Update()
 	var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 	if(Input.GetMouseButtonDown(0) && Physics.Raycast(ray, hit, 100))
 	{
-		leftClick = true;
+		leftClick = !leftClick;
 		Debug.Log("Leftclick is setting to true...?");
 		displayText.text = "click: left";
 		Debug.Log("click: " + displayText.text);
@@ -41,27 +41,30 @@ function Update()
 	}
 	else
 	{
-		if(blinked)
+		if(!leftClick)
 		{
-			delayBlink --;
-		}
-		if(blinked && delayBlink < 0)
-		{
-			renderer.material.mainTexture = regularTxtr;
-			delayBlink = blinkDuration;
-			blinked = false;
-		}
-		if(Random.Range(0, 100) % 60 == 0)
-		{
-			if(Random.Range(0, 100) % 2 == 0)
+			if(blinked)
 			{
-				if(!blinked)
+				delayBlink --;
+			}
+			if(blinked && delayBlink < 0)
+			{
+				renderer.material.mainTexture = regularTxtr;
+				delayBlink = blinkDuration;
+				blinked = false;
+			}
+			if(Random.Range(0, 100) % 60 == 0)
+			{
+				if(Random.Range(0, 100) % 2 == 0)
 				{
-					renderer.material.mainTexture = blinkingTxtr;
-					blinked = true;
-				}
+					if(!blinked)
+					{
+						renderer.material.mainTexture = blinkingTxtr;
+						blinked = true;
+					}
 
-			}	
+				}	
+			}
 		}
 	}
 }
